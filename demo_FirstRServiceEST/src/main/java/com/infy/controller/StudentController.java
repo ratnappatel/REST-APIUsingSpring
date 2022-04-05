@@ -3,9 +3,12 @@ package com.infy.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.MediaType;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -30,10 +33,29 @@ public class StudentController {
 		return service.getAllStudent();
 	}
 	
-	@GetMapping(value="/students/{rollno}", produces = {"application/xml"})
+	@GetMapping(value="/students/{rollno}")
 	public Student getStudentByRollno(@PathVariable("rollno")Integer rno)
 	{
 		return service.getStudentDetails(rno);
+	}
+	
+	@PostMapping("/students")
+	public Student addStudentDetails(@RequestBody() Student s)
+	{
+		return service.insertStudent(s);
+	}
+	
+	@PutMapping("/students/{rollno}")
+	public Student updateStudent(@PathVariable("rollno")Integer rno,@RequestBody()Student s)
+	{
+		return service.editStudentDetails(rno, s);
+	}
+	
+	@DeleteMapping("/students/{rollno}")
+	public String deleteStudent(@PathVariable("rollno")Integer rollno)
+	{
+		service.deleteStudentDetails(rollno);
+		return "Record Deleted Successfully.";
 	}
 
 }

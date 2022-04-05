@@ -26,6 +26,25 @@ public class StudentServiceImpl  implements StudentService {
 		
 		return s;
 	}
+	@Override
+	public Student insertStudent(Student s) {
+		Student added=repository.save(s);
+		return added;
+	}
+	@Override
+	public Student editStudentDetails(int rollno, Student s) {
+		Student existing=repository.findById(rollno).get();
+		existing.setName(s.getName());
+		existing.setMobileno(s.getMobileno());
+		existing.setAddress(s.getAddress());
+		return repository.save(existing);
+		
+	}
+	@Override
+	public Student deleteStudentDetails(int rollno) {
+		repository.deleteById(rollno);
+		return null;
+	}
 	
 
 }
