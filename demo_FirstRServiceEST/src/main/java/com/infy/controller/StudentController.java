@@ -2,7 +2,10 @@ package com.infy.controller;
 
 import java.util.List;
 
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -28,9 +31,10 @@ public class StudentController {
 	@GetMapping("/students")
 	// to execute getStudents function over browser you must call URI ending with 
 	// " /students " using HTTP-GET-REQUEST Method
-	public List<Student> getStudents()
+	public ResponseEntity<List<Student>> getStudents()
 	{
-		return service.getAllStudent();
+		List<Student> studentList = service.getAllStudent();
+		return new ResponseEntity<>(studentList, HttpStatus.OK);
 	}
 	
 	@GetMapping(value="/students/{rollno}")
